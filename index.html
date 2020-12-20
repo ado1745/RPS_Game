@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="jumbotron text-center">
+            <h1 class="gameTitle">Rock Paper Scissors</h1>
+
+            <div class="row" style="margin-top: 40px">
+              <div class="col-md-4" id="userSide">
+                <h4 id="userNameTag">User</h4>
+                <img
+                  src="./game_Images/main.jpg"
+                  class="userImg gameImages"
+                  alt="Game Img "
+                />
+                <div class="userBtns">
+                  <button class="rock btn btn-info">Rock</button>
+                  <button class="paper btn btn-info">Paper</button>
+                  <button class="scissors btn btn-info">Scissors</button>
+                </div>
+              </div>
+              <div class="col-md-4 vs">
+                <h1 style="font-weight: bolder">VS</h1>
+
+                <span class="userScore">0</span>
+                <span>:</span>
+                <span class="computerScore">0</span>
+                <p style="font-weight: 600; font-size: medium" ,>
+                  Tie <span class="tieScore">0</span>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <h4>Computer</h4>
+                <img
+                  src="./game_Images/main.jpg"
+                  class="gameImages compImg"
+                  alt="Game Img"
+                />
+              </div>
+            </div>
+
+            <div class="score"></div>
+
+            <div>
+              <button
+                onclick="reset()"
+                id="reset"
+                class="btn btn-danger resetBtn"
+              >
+                Reset
+              </button>
+            </div>
+
+            <div class="gameControls">
+              <button
+                class="btn btn-success"
+                id="gameStart"
+                onclick="gameStart()"
+              >
+                Click Here to Start Game
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const userButtons = document.querySelectorAll('.userBtns button');
+      const userImg = document.querySelector('.userImg');
+      const compImg = document.querySelector('.compImg');
+      const userScoreTag = document.querySelector('.userScore');
+      const userNameTag = document.querySelector('#userNameTag');
+      const compChoises = ['rock', 'paper', 'scissors'];
+
+      // const gameStartBtn = document.querySelector('#gameStart');
+
+      let userScore = 0;
+      let compScore = 0;
+      let tieScore = 0;
+
+      let gameStart = () => {
+        let userName = prompt('What is your Name?');
+        userNameTag.innerHTML = userName;
+        document.querySelector('.userBtns').style.visibility = 'visible';
+        gameLogic();
+      };
+
+      let gameLogic = () => {
+        userButtons.forEach((btn) => {
+          btn.addEventListener('click', function () {
+            let compRandNumber = Math.floor(Math.random() * 3);
+            console.log(compRandNumber);
+            // console.log(this.textContent.toLowerCase());
+
+            userImg.src = `./game_Images/${this.textContent.toLowerCase()}.png`;
+            compImg.src = `./game_Images/${compChoises[compRandNumber]}.png`;
+
+            if (
+              compChoises[compRandNumber] === this.textContent.toLowerCase()
+            ) {
+              alert("It's tie");
+              tieScore++;
+              document.querySelector('.tieScore').innerHTML = tieScore;
+              return;
+            }
+
+            if (this.textContent.toLowerCase() === 'rock') {
+              if (compChoises[compRandNumber] === 'scissors') {
+                alert('You won');
+                userScore++;
+                userScoreTag.innerHTML = userScore;
+                return;
+              } else {
+                alert('Computer Won');
+                compScore++;
+                document.querySelector('.computerScore').innerHTML = compScore;
+                return;
+              }
+            }
+
+            if (this.textContent.toLowerCase() === 'paper') {
+              if (compChoises[compRandNumber] === 'rock') {
+                alert('You won');
+                userScore++;
+                userScoreTag.innerHTML = userScore;
+                return;
+              } else {
+                alert('Computer Won');
+                compScore++;
+                document.querySelector('.computerScore').innerHTML = compScore;
+                return;
+              }
+            }
+
+            if (this.textContent.toLowerCase() === 'scissors') {
+              if (compChoises[compRandNumber] === 'paper') {
+                alert('You won');
+                userScore++;
+                userScoreTag.innerHTML = userScore;
+                return;
+              } else {
+                alert('Computer Won');
+                compScore++;
+                document.querySelector('.computerScore').innerHTML = compScore;
+                return;
+              }
+            }
+          });
+        });
+      };
+    </script>
+  </body>
+</html>
